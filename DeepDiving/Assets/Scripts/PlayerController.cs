@@ -3,66 +3,55 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
 using Unity.VisualScripting.FullSerializer;
+using UnityEditor.Callbacks;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class PlayerController : MonoBehaviour
 {
+    //movement on x and y axis.
     [SerializeField] float moveForce = 10f;
     private float movementX;
     private float movementY;
-    private Rigidbody2D myBody;
-    private SpriteRenderer sr;
     private float gravity = -0.1f;
-    private bool isFacingRight = true;
+
+    //other components
+    [SerializeField] private Rigidbody2D myBody;
+    private SpriteRenderer sr;
+    
+    //mouselook
+    public Camera cam;
+    UnityEngine.Vector2 movement, mousePos;
 
     private void Awake()
     {
-
         myBody = GetComponent<Rigidbody2D>();
-
     }
 
     void Update()
     {
         PlayerMoveKeyboard();
-        //Flip();
+        mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
+    }
 
-        if(movementX > 0 && !isFacingRight)
-        {
-            Flip();
-        }
-        else if(movementX < 0 && isFacingRight)
-        {
-            Flip();
-        }
+    void FixedUpdate()
+    {
+        MouseLook();
     }
 
     void PlayerMoveKeyboard()
     {
         movementX = Input.GetAxisRaw("Horizontal");
         movementY = Input.GetAxisRaw("Vertical");
-
         transform.position += new UnityEngine.Vector3(movementX, movementY + gravity, 0f) * Time.deltaTime * moveForce;
     }
 
-    private void Flip()
+    void MouseLook()
     {
-        
-
-
-
-
-
-
-
-        //if(isFacingRight && movementX < 0f || !isFacingRight && movementX > 0f)
-        //{
-            isFacingRight = !isFacingRight;
-            //UnityEngine.Vector3 localScale = transform.localScale;
-            //localScale.x *= -1;
-            //transform.localScale = localScale;
-            transform.Rotate(0f, 180f, 0f);
-        //}
-        
+        UnityEngine.Vector2 lookDir = mousePos - myBody.position;
+        float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
+        myBody.rotation = angle;
     }
+
+    
 }
