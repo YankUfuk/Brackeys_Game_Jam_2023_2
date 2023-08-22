@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D myBody;
     private SpriteRenderer sr;
     private float gravity = -0.1f;
+    private bool isFacingRight = true;
 
     private void Awake()
     {
@@ -24,6 +25,16 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         PlayerMoveKeyboard();
+        //Flip();
+
+        if(movementX > 0 && !isFacingRight)
+        {
+            Flip();
+        }
+        else if(movementX < 0 && isFacingRight)
+        {
+            Flip();
+        }
     }
 
     void PlayerMoveKeyboard()
@@ -32,5 +43,26 @@ public class PlayerController : MonoBehaviour
         movementY = Input.GetAxisRaw("Vertical");
 
         transform.position += new UnityEngine.Vector3(movementX, movementY + gravity, 0f) * Time.deltaTime * moveForce;
+    }
+
+    private void Flip()
+    {
+        
+
+
+
+
+
+
+
+        //if(isFacingRight && movementX < 0f || !isFacingRight && movementX > 0f)
+        //{
+            isFacingRight = !isFacingRight;
+            //UnityEngine.Vector3 localScale = transform.localScale;
+            //localScale.x *= -1;
+            //transform.localScale = localScale;
+            transform.Rotate(0f, 180f, 0f);
+        //}
+        
     }
 }
