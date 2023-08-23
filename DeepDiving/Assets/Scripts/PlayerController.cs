@@ -6,6 +6,7 @@ using Unity.VisualScripting.FullSerializer;
 using UnityEditor.Callbacks;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -64,5 +65,14 @@ public class PlayerController : MonoBehaviour
         myBody.rotation = angle;
     }
 
-    
+    public void TakeDamage(int amount)
+    {
+        currentHealth -= amount;
+        healthBar.SetHealth(currentHealth);
+        if(currentHealth <= 0)
+        {
+            Destroy(gameObject);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+    }
 }
