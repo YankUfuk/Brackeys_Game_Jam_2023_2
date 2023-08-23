@@ -16,6 +16,7 @@ public class Shooting : MonoBehaviour
         {
             Shoot();
         }
+        StartCoroutine(HarpoonCoolDown());
     }
 
     void Shoot()
@@ -25,4 +26,11 @@ public class Shooting : MonoBehaviour
         rb.AddForce(firePoint.up * bulletForce, ForceMode2D.Impulse);
         
     }
+
+    IEnumerator HarpoonCoolDown()
+    {
+        yield return new WaitForSeconds(5);
+    }
+        
+    
 }
