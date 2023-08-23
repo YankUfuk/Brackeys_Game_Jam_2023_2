@@ -23,6 +23,17 @@ public class PlayerController : MonoBehaviour
     public Camera cam;
     UnityEngine.Vector2 movement, mousePos;
 
+    //player's health
+    public int maxHealth = 10;
+    public int currentHealth;
+    public HealthBar healthBar;
+
+    void Start()
+    {
+        currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
+    }
+
     private void Awake()
     {
         myBody = GetComponent<Rigidbody2D>();
