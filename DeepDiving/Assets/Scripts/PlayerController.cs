@@ -11,7 +11,7 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     //movement on x and y axis.
-    [SerializeField] float moveForce = 10f;
+    public float moveForce = 10f;
     private float movementX;
     private float movementY;
     private float gravity = -0.1f;
@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviour
         if(currentHealth <= 0)
         {
             Destroy(gameObject);
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            SceneManager.LoadScene("SampleScene");
         }
     }
 }
